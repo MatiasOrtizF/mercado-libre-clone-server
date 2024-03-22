@@ -1,11 +1,9 @@
 package com.ecommerce.services;
 
-import com.ecommerce.controllers.AuthController;
 import com.ecommerce.exceptions.ResourceNotFoundException;
 import com.ecommerce.exceptions.UnauthorizedException;
 import com.ecommerce.models.Product;
 import com.ecommerce.repositories.ProductRepository;
-import com.ecommerce.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

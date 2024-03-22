@@ -1,24 +1,18 @@
-package com.ecommerce.models;
+package com.ecommerce.models.vehicles;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "products")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Product {
+@Table(name = "truck")
+public class Truck {
+    // global
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "category")
-    private String category;
-
-    @Column(name ="sub_category")
-    private String subCategory;
 
     @Column(name = "title")
     private String title;
@@ -38,12 +32,32 @@ public class Product {
     @Column(name = "stock")
     private Integer stock;
 
-    @Column(name = "brand")
-    private String brand;
-
     @Column(name = "image")
     private String image;
 
-    @Column(name = "product_type", columnDefinition = "VARCHAR(255) DEFAULT 'default_value'")
-    private String productType;
+    // car
+
+    @Column(name = "brand")
+    private String brand;
+
+    @Column(name = "model")
+    private String model;
+
+    @Column(name = "version")
+    private String version;
+
+    @Column(name = "kilometres")
+    private Integer kilometres;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(name = "color")
+    private String color;
+
+    @Column(name = "payload_capacity")
+    private String payloadCapacity;
+
+    @Column(name = "transmission")
+    private String transmission;
 }

@@ -1,14 +1,12 @@
 package com.ecommerce.controllers;
 
 import com.ecommerce.exceptions.UnauthorizedException;
+import com.ecommerce.models.vehicles.Car;
 import com.ecommerce.models.Product;
 import com.ecommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-
-import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.9:8081"})
 @RequestMapping("api/product")
@@ -26,6 +24,12 @@ public class ProductController {
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
         return ResponseEntity.ok(productService.addProduct(product));
     }
+
+    @PostMapping("/cars")
+    public ResponseEntity<?> addCar(@RequestBody Car car) {
+        return ResponseEntity.ok(productService.addCar(car));
+    }
+
 
     @GetMapping
     public ResponseEntity<?> getAllProducts(@RequestHeader(value = "Authorization")String token) {

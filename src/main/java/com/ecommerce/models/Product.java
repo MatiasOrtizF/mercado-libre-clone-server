@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Product {
 
@@ -38,12 +38,6 @@ public class Product {
     @Column(name = "stock")
     private Integer stock;
 
-    @Column(name = "brand")
-    private String brand;
-
     @Column(name = "image")
     private String image;
-
-    @Column(name = "product_type", columnDefinition = "VARCHAR(255) DEFAULT 'default_value'")
-    private String productType;
 }

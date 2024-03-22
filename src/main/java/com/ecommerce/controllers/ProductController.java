@@ -25,10 +25,10 @@ public class ProductController {
         return ResponseEntity.ok(productService.addProduct(product));
     }
 
-    @PostMapping("/cars")
+    /*@PostMapping("/cars")
     public ResponseEntity<?> addCar(@RequestBody Car car) {
         return ResponseEntity.ok(productService.addCar(car));
-    }
+    }*/
 
 
     @GetMapping

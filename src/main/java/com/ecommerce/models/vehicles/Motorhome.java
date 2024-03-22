@@ -1,5 +1,7 @@
 package com.ecommerce.models.vehicles;
 
+import com.ecommerce.models.Product;
+import com.ecommerce.models.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,26 +17,13 @@ public class Motorhome {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_product")
+    private Product product;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "price")
-    private Double price;
-
-    @Column(name = "discount_percentage")
-    private Double discountPercentage;
-
-    @Column(name = "rating")
-    private Double rating;
-
-    @Column(name = "stock")
-    private Integer stock;
-
-    @Column(name = "image")
-    private String image;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_user")
+    private User user;
 
     // car
 

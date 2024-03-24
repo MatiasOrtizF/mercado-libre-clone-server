@@ -32,29 +32,30 @@ public class ProductController {
 
 
     @GetMapping
-    public ResponseEntity<?> getAllProducts(@RequestHeader(value = "Authorization")String token) {
-        try {
-            return ResponseEntity.ok(productService.getAllProducts(token));
-        } catch (UnauthorizedException e) {
-            return ResponseEntity.badRequest().body("Unauthorized: invalid token");
-        }
+    public ResponseEntity<?> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getProduct(@PathVariable Long id, @RequestHeader(value = "Authorization")String token) {
+    public ResponseEntity<?> getProduct(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(productService.getProduct(id, token));
+            return ResponseEntity.ok(productService.getProduct(id));
         }catch (UnauthorizedException e) {
             return ResponseEntity.badRequest().body("Unauthorized: invalid token");
         }
     }
 
-    @PutMapping("{id}")
+    @GetMapping("/category/{category}")
+    public ResponseEntity<?> getProductsByCategory(@PathVariable String category) {
+        return ResponseEntity.ok(productService.getProductsByCategory(category));
+    }
+
+    /*@PutMapping("{id}")
     public ResponseEntity<?> updateStockProduct(@PathVariable Long id, @RequestParam Integer quantityPurchased, @RequestHeader(value = "Authorization")String token) {
         try {
             return ResponseEntity.ok(productService.updateStockProduct(id, quantityPurchased, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.badRequest().body("Unauthorized: invalid token");
         }
-    }
+    }*/
 }

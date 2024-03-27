@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
-@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.9:8081"})
+@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.9:8081",})
 @RequestMapping("/api/product/car")
 @RestController
 public class CarController {

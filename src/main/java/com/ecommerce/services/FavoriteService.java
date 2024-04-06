@@ -57,10 +57,13 @@ public class FavoriteService {
         } throw new UnauthorizedException("Unauthorized: invalid token");
     }
 
-    public void deleteProductInCart(Long id, String token) {
+    public boolean deleteProductInFavorite(Long id, String token) {
         if(authService.validationToken(token)) {
             Favorite favorite = favoriteRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The product with this id: " + id + "is not found"));;
             favoriteRepository.delete(favorite);
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+            return true;
+        } else {
+            throw new UnauthorizedException("Unauthorized: invalid token");
+        }
     }
 }

@@ -34,6 +34,10 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The product with this id: " + id + "is not found"));
     }
 
+    public List<Product> searchProductByName(String word) {
+        return productRepository.findByTitle(word);
+    }
+
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }

@@ -5,6 +5,7 @@ import com.ecommerce.models.vehicles.Car;
 import com.ecommerce.models.Product;
 import com.ecommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +42,13 @@ public class ProductController {
         try {
             return ResponseEntity.ok(productService.getProduct(id));
         }catch (UnauthorizedException e) {
-            return ResponseEntity.badRequest().body("Unauthorized: invalid token");
+            return ResponseEntity.badRequest().body("Unauthorized: invalid token"); //change this
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchProductByName(@RequestParam String word) {
+        return ResponseEntity.ok(productService.searchProductByName(word));
     }
 
     @GetMapping("/category/{category}")

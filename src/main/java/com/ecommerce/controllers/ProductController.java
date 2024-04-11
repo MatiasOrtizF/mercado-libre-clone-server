@@ -1,11 +1,11 @@
 package com.ecommerce.controllers;
 
+import com.ecommerce.exceptions.ResourceNotFoundException;
 import com.ecommerce.exceptions.UnauthorizedException;
-import com.ecommerce.models.vehicles.Car;
 import com.ecommerce.models.Product;
 import com.ecommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +41,8 @@ public class ProductController {
     public ResponseEntity<?> getProduct(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(productService.getProduct(id));
-        }catch (UnauthorizedException e) {
-            return ResponseEntity.badRequest().body("Unauthorized: invalid token"); //change this
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product does not exist");
         }
     }
 

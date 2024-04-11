@@ -1,7 +1,9 @@
 package com.ecommerce.services;
 
+import com.ecommerce.exceptions.ResourceNotFoundException;
 import com.ecommerce.models.User;
 import com.ecommerce.repositories.UserRepository;
+import com.ecommerce.utils.JWTUtil;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final JWTUtil jwtUtil;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JWTUtil jwtUtil) {
         this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     public User addUser(User user) {
@@ -23,5 +27,10 @@ public class UserService {
         user.setPassword(hash);
 
         return userRepository.save(user);
+    }
+
+    public User getUserInfo(String token) {
+        String userId = jwtUtil.getKey(token);
+        return userRepository.findById(Long.valueOf(userId)).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + userId + "is not found"));
     }
 }

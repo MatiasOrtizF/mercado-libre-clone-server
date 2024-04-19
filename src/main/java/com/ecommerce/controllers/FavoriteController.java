@@ -51,4 +51,15 @@ public class FavoriteController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
     }
+
+    @GetMapping("{productId}")
+    public ResponseEntity<?> getFavoriteByProductId(@PathVariable Long productId, @RequestHeader(value = "Authorization") String token) {
+        try {
+            return ResponseEntity.ok(favoriteService.getFavoriteByProductId(productId, token));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product or User does not exist");
+        }
+    }
+
+
 }

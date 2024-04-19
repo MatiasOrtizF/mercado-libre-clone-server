@@ -44,14 +44,13 @@ public class CartController {
         }
     }
 
-    @DeleteMapping("{productId}")
-    public ResponseEntity<?> deleteProductInCart(@PathVariable Long productId, @RequestHeader(value = "Authorization")String token) {
-        try{
-            cartService.deleteProductInCart(productId, token);
-            return ResponseEntity.ok().build();
-        }catch (NoSuchElementException e) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteProductInCart(@PathVariable Long id, @RequestHeader(value = "Authorization")String token) {
+        try {
+            return ResponseEntity.ok(cartService.deleteProductInCart(id, token));
+        } catch (NoSuchElementException e) {
             return ResponseEntity.badRequest().body("Product does not exist");
-        }catch (UnauthorizedException e) {
+        } catch (UnauthorizedException e) {
             return ResponseEntity.badRequest().body("Unauthorized: invalid token");
         }
     }

@@ -40,4 +40,11 @@ public class Product {
 
     @Column(name = "image")
     private String image;
+
+    @Column(name = "shipment")
+    private Double shipment;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_user")
+    private User user;
 }

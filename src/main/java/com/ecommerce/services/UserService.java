@@ -1,6 +1,7 @@
 package com.ecommerce.services;
 
 import com.ecommerce.exceptions.ResourceNotFoundException;
+import com.ecommerce.exceptions.UnauthorizedException;
 import com.ecommerce.models.User;
 import com.ecommerce.repositories.UserRepository;
 import com.ecommerce.utils.JWTUtil;
@@ -31,6 +32,8 @@ public class UserService {
 
     public User getUserInfo(String token) {
         String userId = jwtUtil.getKey(token);
-        return userRepository.findById(Long.valueOf(userId)).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + userId + "is not found"));
+        if(userId!=null){
+            return userRepository.findById(Long.valueOf(userId)).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + userId + "is not found"));
+        } throw new UnauthorizedException("invalid token");
     }
 }

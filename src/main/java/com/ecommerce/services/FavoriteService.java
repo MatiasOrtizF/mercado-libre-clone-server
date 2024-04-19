@@ -66,4 +66,18 @@ public class FavoriteService {
             throw new UnauthorizedException("Unauthorized: invalid token");
         }
     }
+
+    public boolean getFavoriteByProductId(Long productId, String token) {
+        if(authService.validationToken(token)) {
+            String userId = jwtUtil.getKey(token);
+            User user = userRepository.findById(Long.valueOf(userId)).orElseThrow(() -> new ResourceNotFoundException("The user is not found"));
+            Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("The product is not found"));
+
+            Favorite existingFav = favoriteRepository.findByUserAndProduct(user, product);
+
+            return (existingFav != null);
+        } else {
+            return false;
+        }
+    }
 }

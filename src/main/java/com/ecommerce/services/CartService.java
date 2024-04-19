@@ -59,10 +59,13 @@ public class CartService {
         } throw new UnauthorizedException("Unauthorized: invalid token");
     }
 
-    public void deleteProductInCart(Long id, String token) {
+    public Boolean deleteProductInCart(Long id, String token) {
         if(authService.validationToken(token)) {
             Cart cart = cartRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The product with this id: " + id + "is not found"));;
             cartRepository.delete(cart);
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+            return true;
+        } else {
+            throw new UnauthorizedException("Unauthorized: invalid token");
+        }
     }
 }

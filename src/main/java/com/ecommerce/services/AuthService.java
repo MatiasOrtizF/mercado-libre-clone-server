@@ -47,4 +47,9 @@ public class AuthService {
         }
         throw new RuntimeException("Email or password is incorrect");
     }
+
+    public Long getUserId(String token) {
+        String userId = jwtUtil.getKey(token);
+        return Long.valueOf(userId);
+    }
 }

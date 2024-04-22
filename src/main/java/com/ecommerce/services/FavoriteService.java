@@ -9,7 +9,6 @@ import com.ecommerce.models.User;
 import com.ecommerce.repositories.FavoriteRepository;
 import com.ecommerce.repositories.ProductRepository;
 import com.ecommerce.repositories.UserRepository;
-import com.ecommerce.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,31 +18,29 @@ import java.util.List;
 public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
     private final AuthService authService;
-    private final JWTUtil jwtUtil;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
     @Autowired
-    public FavoriteService(FavoriteRepository favoriteRepository, AuthService authService, JWTUtil jwtUtil, UserRepository userRepository,
+    public FavoriteService(FavoriteRepository favoriteRepository, AuthService authService, UserRepository userRepository,
                        ProductRepository productRepository) {
         this.favoriteRepository = favoriteRepository;
         this.authService = authService;
-        this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
     }
 
     public List<Favorite> getAllProductsInCart(String token) {
         if(authService.validationToken(token)) {
-            String userId = jwtUtil.getKey(token);
-            return favoriteRepository.findByUserId(Long.valueOf(userId));
+            Long userId = authService.getUserId(token);
+            return favoriteRepository.findByUserId(userId);
         } throw new UnauthorizedException("Unauthorized: Invalid token");
     }
 
     public Favorite addProductInCart(Long productId, String token) {
         if(authService.validationToken(token)) {
-            String userId = jwtUtil.getKey(token);
-            User user = userRepository.findById(Long.valueOf(userId)).orElseThrow(() -> new ResourceNotFoundException("The user is not found"));
+            Long userId = authService.getUserId(token);
+            User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("The user is not found"));
             Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("The product is not found"));
 
             Favorite existingFav = favoriteRepository.findByUserAndProduct(user, product);
@@ -69,8 +66,8 @@ public class FavoriteService {
 
     public boolean getFavoriteByProductId(Long productId, String token) {
         if(authService.validationToken(token)) {
-            String userId = jwtUtil.getKey(token);
-            User user = userRepository.findById(Long.valueOf(userId)).orElseThrow(() -> new ResourceNotFoundException("The user is not found"));
+            Long userId = authService.getUserId(token);
+            User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("The user is not found"));
             Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("The product is not found"));
 
             Favorite existingFav = favoriteRepository.findByUserAndProduct(user, product);

@@ -42,6 +42,10 @@ public class ProductService {
         return productRepository.findByCategory(category);
     }
 
+    public List<Product> getProductsWithDiscount() {
+        return productRepository.findByDiscountPercentageNotNull();
+    }
+
 
     /*public Product updateStockProduct(Long id, Integer quantityPurchased, String token) {
         if(authService.validationToken(token)) {

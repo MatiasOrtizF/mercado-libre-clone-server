@@ -56,6 +56,11 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductsByCategory(category));
     }
 
+    @GetMapping("/discount")
+    public ResponseEntity<?> getProductsWithDiscount() {
+        return ResponseEntity.ok(productService.getProductsWithDiscount());
+    }
+
     /*@PutMapping("{id}")
     public ResponseEntity<?> updateStockProduct(@PathVariable Long id, @RequestParam Integer quantityPurchased, @RequestHeader(value = "Authorization")String token) {
         try {
